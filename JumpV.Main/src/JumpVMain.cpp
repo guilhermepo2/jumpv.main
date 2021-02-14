@@ -9,6 +9,12 @@ public:
 
 	void Start() override {
 		DEBUG_INFO("Starting Jump V. Main");
+
+		// SetBackgroundColor(0.5f, 0.5f, 0.5f, 1.0f);
+
+		Realiti2D::Entity& Character = AddEntity("Character");
+		Character.AddComponent<Realiti2D::Transform>(Realiti2D::Vector2(0.0f, 0.0f), 0.0f, Realiti2D::Vector2(4.0f, 4.0f));
+		Character.AddComponent<Realiti2D::Sprite>("assets/character_idle.png", 5);
 	}
 };
 
