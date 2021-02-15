@@ -95,7 +95,7 @@ public:
 		// SetBackgroundColor(0.5f, 0.5f, 0.5f, 1.0f);
 
 		Realiti2D::Entity& Character = AddEntity("Character");
-		Character.AddComponent<Realiti2D::Transform>(Realiti2D::Vector2(0.0f, 0.0f), 0.0f, Realiti2D::Vector2(2.0f, 2.0f));
+		Character.AddComponent<Realiti2D::Transform>(Realiti2D::Vector2(0.0f, 0.0f), 0.0f, Realiti2D::Vector2(4.0f, 4.0f));
 		Character.AddComponent<Realiti2D::Sprite>("assets/TreasureHunters/Character/Idle/I01.png", 5);
 		Realiti2D::AnimatedSprite& IdleAnimation = Character.AddComponent<Realiti2D::AnimatedSprite>();
 		IdleAnimation.SetAnimationFPS(12.0f);
