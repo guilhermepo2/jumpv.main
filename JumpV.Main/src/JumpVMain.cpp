@@ -24,7 +24,7 @@ public:
 		Character.AddComponent<Realiti2D::Sprite>("assets/TreasureHunters/Character/Idle/I01.png", 5);
 
 		Realiti2D::AnimatedSprite& AnimationComponent = Character.AddComponent<Realiti2D::AnimatedSprite>();
-		Realiti2D::AnimationClip* IdleAnimation = new Realiti2D::AnimationClip(12.0f);
+		Realiti2D::AnimationClip* IdleAnimation = new Realiti2D::AnimationClip(6.0f);
 		IdleAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Idle/I01.png");
 		IdleAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Idle/I02.png");
 		IdleAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Idle/I03.png");
