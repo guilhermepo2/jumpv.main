@@ -3,7 +3,6 @@
 #define HEIGHT 576
 
 // TODO
-// 1. Make the Animated Sprite component have a list of animations and then be able to set the animations that are playing
 // 2. Collision raycast to handle the mover
 // 3. Collision Layers?
 
@@ -47,7 +46,7 @@ private:
 
 class PlayerController : public Realiti2D::Component {
 public:
-	PlayerController() : m_PlayerVelocityX(64.0f), m_Gravity(0.0f) {}
+	PlayerController() : m_PlayerVelocityX(128.0f), m_Gravity(0.0f) {}
 	~PlayerController() {}
 
 	virtual void Initialize() {
@@ -75,6 +74,10 @@ public:
 		Realiti2D::Vector2 VerletVelocity(Movement.x, Movement.y + (0.5f * m_Gravity * DeltaTime * DeltaTime) );
 		Realiti2D::Vector2 VerletDeltaMovement = VerletVelocity * DeltaTime;
 		Owner->GetComponentOfType<Mover>()->Move(VerletDeltaMovement, DeltaTime);
+
+		Realiti2D::AnimatedSprite* AnimationComponent = Owner->GetComponentOfType<Realiti2D::AnimatedSprite>();
+		if (Movement.x != 0) { AnimationComponent->Play("run"); } 
+		else { AnimationComponent->Play("idle"); }
 	}
 
 private:
@@ -97,13 +100,27 @@ public:
 		Realiti2D::Entity& Character = AddEntity("Character");
 		Character.AddComponent<Realiti2D::Transform>(Realiti2D::Vector2(0.0f, 0.0f), 0.0f, Realiti2D::Vector2(4.0f, 4.0f));
 		Character.AddComponent<Realiti2D::Sprite>("assets/TreasureHunters/Character/Idle/I01.png", 5);
-		Realiti2D::AnimatedSprite& IdleAnimation = Character.AddComponent<Realiti2D::AnimatedSprite>();
-		IdleAnimation.SetAnimationFPS(12.0f);
-		IdleAnimation.AddAnimationTexture("assets/TreasureHunters/Character/Idle/I01.png");
-		IdleAnimation.AddAnimationTexture("assets/TreasureHunters/Character/Idle/I02.png");
-		IdleAnimation.AddAnimationTexture("assets/TreasureHunters/Character/Idle/I03.png");
-		IdleAnimation.AddAnimationTexture("assets/TreasureHunters/Character/Idle/I04.png");
-		IdleAnimation.AddAnimationTexture("assets/TreasureHunters/Character/Idle/I05.png");
+
+		Realiti2D::AnimatedSprite& AnimationComponent = Character.AddComponent<Realiti2D::AnimatedSprite>();
+		Realiti2D::AnimationClip* IdleAnimation = new Realiti2D::AnimationClip(12.0f);
+		IdleAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Idle/I01.png");
+		IdleAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Idle/I02.png");
+		IdleAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Idle/I03.png");
+		IdleAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Idle/I04.png");
+		IdleAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Idle/I05.png");
+		AnimationComponent.AddAnimationClip("idle", IdleAnimation);
+		
+		Realiti2D::AnimationClip* RunningAnimation = new Realiti2D::AnimationClip(12.0f);
+		RunningAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Run/Run01.png");
+		RunningAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Run/Run02.png");
+		RunningAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Run/Run03.png");
+		RunningAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Run/Run04.png");
+		RunningAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Run/Run05.png");
+		RunningAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Run/Run06.png");
+		AnimationComponent.AddAnimationClip("run", RunningAnimation);
+
+		AnimationComponent.Play("idle");
+
 		Character.AddComponent<Mover>();
 		Character.AddComponent<PlayerController>();
 	}
