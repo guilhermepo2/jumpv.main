@@ -24,7 +24,7 @@ public:
 		Character.AddComponent<Realiti2D::Sprite>("assets/TreasureHunters/Character/Idle/I01.png", 5);
 
 		Realiti2D::AnimatedSprite& AnimationComponent = Character.AddComponent<Realiti2D::AnimatedSprite>();
-		Realiti2D::AnimationClip* IdleAnimation = new Realiti2D::AnimationClip(6.0f);
+		Realiti2D::AnimationClip* IdleAnimation = new Realiti2D::AnimationClip(6.0f, true);
 		IdleAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Idle/I01.png");
 		IdleAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Idle/I02.png");
 		IdleAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Idle/I03.png");
@@ -32,7 +32,7 @@ public:
 		IdleAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Idle/I05.png");
 		AnimationComponent.AddAnimationClip("idle", IdleAnimation);
 		
-		Realiti2D::AnimationClip* RunningAnimation = new Realiti2D::AnimationClip(12.0f);
+		Realiti2D::AnimationClip* RunningAnimation = new Realiti2D::AnimationClip(12.0f, true);
 		RunningAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Run/Run01.png");
 		RunningAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Run/Run02.png");
 		RunningAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Run/Run03.png");
@@ -40,6 +40,12 @@ public:
 		RunningAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Run/Run05.png");
 		RunningAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Run/Run06.png");
 		AnimationComponent.AddAnimationClip("run", RunningAnimation);
+
+		Realiti2D::AnimationClip* JumpAnimation = new Realiti2D::AnimationClip(12.0f, false);
+		JumpAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Jump/Jump01.png");
+		JumpAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Jump/Jump02.png");
+		JumpAnimation->AddAnimationTexture("assets/TreasureHunters/Character/Jump/Jump03.png");
+		AnimationComponent.AddAnimationClip("jump", JumpAnimation);
 
 		AnimationComponent.Play("idle");
 

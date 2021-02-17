@@ -4,7 +4,7 @@
 
 class PlayerController : public Realiti2D::Component {
 public:
-	PlayerController() : m_PlayerVelocityX(128.0f), m_Gravity(0.0f) {}
+	PlayerController() : m_PlayerVelocityX(128.0f), m_Gravity(0.0f), m_Jump(false) {}
 	~PlayerController() {}
 
 	virtual void Initialize() {
@@ -12,6 +12,11 @@ public:
 	}
 
 	void ProcessInput(const Realiti2D::InputState& InputState) {
+
+		if (InputState.Keyboard.WasKeyPressedThisFrame(Realiti2D::R2D_Keycode::KEYCODE_SPACE)) {
+			m_Jump = true;
+		}
+
 		if (InputState.Keyboard.IsKeyDown(Realiti2D::R2D_Keycode::KEYCODE_A)) {
 			m_MovementDirection = -1;
 		}
@@ -34,13 +39,21 @@ public:
 		Owner->GetComponentOfType<Mover>()->Move(VerletDeltaMovement, DeltaTime);
 
 		Realiti2D::AnimatedSprite* AnimationComponent = Owner->GetComponentOfType<Realiti2D::AnimatedSprite>();
-		if (Movement.x != 0) { AnimationComponent->Play("run"); }
+
+		if (m_Jump) {
+			AnimationComponent->Play("jump");
+
+			if (AnimationComponent->IsPlayingAnimation("jump") && AnimationComponent->IsAnimationOnLastFrame()) {
+				m_Jump = false;
+			}
+		} else if (Movement.x != 0) { AnimationComponent->Play("run"); }
 		else { AnimationComponent->Play("idle"); }
 	}
 
 private:
 	float m_PlayerVelocityX;
 	float m_Gravity;
+	bool m_Jump;
 
 	int m_MovementDirection;
 };
