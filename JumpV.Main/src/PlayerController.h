@@ -38,8 +38,11 @@ public:
 		Realiti2D::Vector2 VerletDeltaMovement = VerletVelocity * DeltaTime;
 		Owner->GetComponentOfType<Mover>()->Move(VerletDeltaMovement, DeltaTime);
 
-		Realiti2D::AnimatedSprite* AnimationComponent = Owner->GetComponentOfType<Realiti2D::AnimatedSprite>();
+		if (Movement.x != 0) {
+			Owner->GetComponentOfType<Realiti2D::Transform>()->ChangeScaleXSign(Realiti2D::Math::Sign(Movement.x));
+		}
 
+		Realiti2D::AnimatedSprite* AnimationComponent = Owner->GetComponentOfType<Realiti2D::AnimatedSprite>();
 		if (m_Jump) {
 			AnimationComponent->Play("jump");
 

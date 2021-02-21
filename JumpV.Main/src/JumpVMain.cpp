@@ -19,6 +19,11 @@ public:
 
 		// SetBackgroundColor(0.5f, 0.5f, 0.5f, 1.0f);
 
+		// Background
+		Realiti2D::Entity& Background = AddEntity("Background");
+		Background.AddComponent<Realiti2D::Transform>(Realiti2D::Vector2(0.0f, 0.0f), 0.0f, Realiti2D::Vector2(3.0f, 4.5f));
+		Background.AddComponent<Realiti2D::Sprite>("assets/TreasureHunters/Environment/Background/BGImage.png", 1);
+
 		Realiti2D::Entity& Character = AddEntity("Character");
 		Character.AddComponent<Realiti2D::Transform>(Realiti2D::Vector2(0.0f, 0.0f), 0.0f, Realiti2D::Vector2(3.0f, 3.0f));
 		Character.AddComponent<Realiti2D::Sprite>("assets/TreasureHunters/Character/Idle/I01.png", 5);
