@@ -23,10 +23,14 @@ public:
 		Realiti2D::Entity& Background = AddEntity("Background");
 		Background.AddComponent<Realiti2D::Transform>(Realiti2D::Vector2(0.0f, 0.0f), 0.0f, Realiti2D::Vector2(3.0f, 4.5f));
 		Background.AddComponent<Realiti2D::Sprite>("assets/TreasureHunters/Environment/Background/BGImage.png", 1);
+		Realiti2D::Entity& Clouds = AddEntity("Clouds");
+		Clouds.AddComponent<Realiti2D::Transform>(Realiti2D::Vector2(64.0f, 160.0f), 0.0f, Realiti2D::Vector2(4.0f, 3.0f));
+		Clouds.AddComponent<Realiti2D::Sprite>("assets/TreasureHunters/Environment/Background/SmallCloud1.png", 2);
 
 		Realiti2D::Entity& Character = AddEntity("Character");
 		Character.AddComponent<Realiti2D::Transform>(Realiti2D::Vector2(0.0f, 0.0f), 0.0f, Realiti2D::Vector2(3.0f, 3.0f));
 		Character.AddComponent<Realiti2D::Sprite>("assets/TreasureHunters/Character/Idle/I01.png", 5);
+		Character.AddComponent<Realiti2D::BoxCollider>(Realiti2D::Vector2(-16.0f, -16.0f), Realiti2D::Vector2(16.0f, 16.0f));
 
 		Realiti2D::AnimatedSprite& AnimationComponent = Character.AddComponent<Realiti2D::AnimatedSprite>();
 		Realiti2D::AnimationClip* IdleAnimation = new Realiti2D::AnimationClip(6.0f, true);
@@ -56,6 +60,15 @@ public:
 
 		Character.AddComponent<Mover>();
 		Character.AddComponent<PlayerController>();
+
+		// ---------------------------------------------------------------
+		for (int i = 0; i < 12; i++) {
+			Realiti2D::Entity& Platform1 = AddEntity("Platform");
+			float PlatformX = -500.0f + (i * 96.0f);
+			Platform1.AddComponent<Realiti2D::Transform>(Realiti2D::Vector2(PlatformX, -256.0f), 0.0f, Realiti2D::Vector2(3.0f, 3.0f));
+			Platform1.AddComponent<Realiti2D::Sprite>("assets/TreasureHunters/Environment/Background/AddSky.png", 2);
+			Platform1.AddComponent<Realiti2D::BoxCollider>(Realiti2D::Vector2(-16.0f, -16.0f), Realiti2D::Vector2(16.0f, 16.0f));
+		}
 	}
 };
 
