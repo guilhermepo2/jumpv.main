@@ -4,7 +4,7 @@
 
 class PlayerController : public Realiti2D::Component {
 public:
-	PlayerController() : m_PlayerVelocityX(128.0f), m_Gravity(0.0f), m_Jump(false) {}
+	PlayerController() : m_PlayerVelocityX(128.0f), m_Gravity(-98000.0f), m_Jump(false) {}
 	~PlayerController() {}
 
 	virtual void Initialize() {
