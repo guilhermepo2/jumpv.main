@@ -57,13 +57,15 @@ private:
 	}
 
 	void MoveVertical(Realiti2D::Vector2& DeltaMovement) {
-		Realiti2D::CollisionInfo Info;
-		Realiti2D::Vector2 Min = Owner->GetComponentOfType <Realiti2D::Transform>()->Position + Owner->GetComponentOfType<Realiti2D::BoxCollider>()->GetBoundingBox()->MinPoint;
+		Realiti2D::Vector2 Min = Owner->GetComponentOfType<Realiti2D::Transform>()->Position;
+		Realiti2D::Vector2 AABB = Owner->GetComponentOfType<Realiti2D::BoxCollider>()->GetBoundingBox()->MinPoint;
+		AABB.x *= Owner->GetComponentOfType<Realiti2D::Transform>()->Scale.x;
+		AABB.y *= Owner->GetComponentOfType<Realiti2D::Transform>()->Scale.y;
+		Min += AABB;
 		Min += Realiti2D::Vector2(-0.05f, -0.05f);
 		Realiti2D::Vector2 Destination = Min + Realiti2D::Vector2(0.0f, DeltaMovement.y);
 
-		DEBUG_INFO("Checking Collision: Min: ({0}, {1}), Destination: ({2}, {3})", Min.x, Min.y, Destination.x, Destination.y);
-
+		Realiti2D::CollisionInfo Info;
 		bool bCollided = Realiti2D::CollisionWorld::s_Instance->SegmentCast(Min, Destination, Info);
 
 		if (bCollided) {

@@ -4,7 +4,7 @@
 
 class PlayerController : public Realiti2D::Component {
 public:
-	PlayerController() : m_PlayerVelocityX(128.0f), m_Gravity(-98000.0f), m_Jump(false) {}
+	PlayerController() : m_PlayerVelocityX(128.0f), m_Gravity(9.81f), m_Jump(false) {}
 	~PlayerController() {}
 
 	virtual void Initialize() {
@@ -34,7 +34,7 @@ public:
 		// Movement.x = Realiti2D::Math::Lerp(Movement.x, m_MovementDirection * m_PlayerVelocityX, SmoothedMovementFactor * DeltaTime);
 		// TODO max velocity.y with terminal velocity
 
-		Realiti2D::Vector2 VerletVelocity(Movement.x, Movement.y + (0.5f * m_Gravity * DeltaTime * DeltaTime));
+		Realiti2D::Vector2 VerletVelocity(Movement.x, Movement.y + (0.5f * (-m_Gravity * 10000) * DeltaTime * DeltaTime));
 		Realiti2D::Vector2 VerletDeltaMovement = VerletVelocity * DeltaTime;
 		Owner->GetComponentOfType<Mover>()->Move(VerletDeltaMovement, DeltaTime);
 
@@ -53,9 +53,9 @@ public:
 		else { AnimationComponent->Play("idle"); }
 	}
 
-private:
 	float m_PlayerVelocityX;
 	float m_Gravity;
+private:
 	bool m_Jump;
 
 	int m_MovementDirection;

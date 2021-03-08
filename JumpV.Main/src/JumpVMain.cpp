@@ -2,12 +2,39 @@
 #include "Mover.h"
 #include "PlayerController.h"
 
+// TODO: fix lol
+// that's a big oof
+#include "../thirdparty/dearimgui/imgui.h"
+#include "../thirdparty/dearimgui/imgui_impl_sdl.h"
+#include "../thirdparty/dearimgui/imgui_impl_opengl3.h"
+
+
 #define WIDTH 1024
 #define HEIGHT 576
 
 // TODO
 // 2. Collision raycast to handle the mover
 // 3. Collision Layers?
+
+class DebugWindow : public Realiti2D::ImGuiWindow {
+public:
+	void DrawWindow() override {
+		ImGui::Begin("Player Controller variables");
+		ImGui::InputFloat("Player Movement Speed", &(PlayerControllerRef->m_PlayerVelocityX));
+		ImGui::InputFloat("Gravity", &(PlayerControllerRef->m_Gravity));
+
+		/*
+		if (ImGui::BeginTable("split", 2, ImGuiTableFlags_BordersOuter | ImGuiTableFlags_Resizable)) {	
+		}
+		*/
+
+		// ImGui::SliderFloat("Player Movement Speed", &(PlayerControllerRef->m_PlayerVelocityX), 0.0f, 250.0f);
+		// ImGui::SliderFloat("Player Gravity", &(PlayerControllerRef->m_Gravity), 0.0f, 100.0f);
+		ImGui::End();
+	}
+
+	PlayerController* PlayerControllerRef;
+};
 
 class JumpVMain : public Realiti2D::Application {
 public:
@@ -30,7 +57,7 @@ public:
 		Realiti2D::Entity& Character = AddEntity("Character");
 		Character.AddComponent<Realiti2D::Transform>(Realiti2D::Vector2(0.0f, 0.0f), 0.0f, Realiti2D::Vector2(3.0f, 3.0f));
 		Character.AddComponent<Realiti2D::Sprite>("assets/TreasureHunters/Character/Idle/I01.png", 5);
-		Character.AddComponent<Realiti2D::BoxCollider>(Realiti2D::Vector2(-16.0f, -16.0f), Realiti2D::Vector2(16.0f, 16.0f));
+		Character.AddComponent<Realiti2D::BoxCollider>(Realiti2D::Vector2(-10.0f, -12.0f), Realiti2D::Vector2(10.0f, 12.0f));
 
 		Realiti2D::AnimatedSprite& AnimationComponent = Character.AddComponent<Realiti2D::AnimatedSprite>();
 		Realiti2D::AnimationClip* IdleAnimation = new Realiti2D::AnimationClip(6.0f, true);
@@ -59,7 +86,7 @@ public:
 		AnimationComponent.Play("idle");
 
 		Character.AddComponent<Mover>();
-		Character.AddComponent<PlayerController>();
+		PlayerController& p = Character.AddComponent<PlayerController>();
 
 		// ---------------------------------------------------------------
 		for (int i = 0; i < 12; i++) {
@@ -69,6 +96,11 @@ public:
 			Platform1.AddComponent<Realiti2D::Sprite>("assets/TreasureHunters/Environment/Background/AddSky.png", 2);
 			Platform1.AddComponent<Realiti2D::BoxCollider>(Realiti2D::Vector2(-16.0f, -16.0f), Realiti2D::Vector2(16.0f, 16.0f));
 		}
+
+		// ------------------------------------------------------------------------------------------------------------------------
+		DebugWindow* w = new DebugWindow();
+		w->PlayerControllerRef = &p;
+		Realiti2D::Renderer::s_Instance->PushDearImGuiWindow(w);
 	}
 };
 
