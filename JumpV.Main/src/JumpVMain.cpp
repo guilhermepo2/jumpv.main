@@ -22,14 +22,6 @@ public:
 		ImGui::Begin("Player Controller variables");
 		ImGui::InputFloat("Player Movement Speed", &(PlayerControllerRef->m_PlayerVelocityX));
 		ImGui::InputFloat("Gravity", &(PlayerControllerRef->m_Gravity));
-
-		/*
-		if (ImGui::BeginTable("split", 2, ImGuiTableFlags_BordersOuter | ImGuiTableFlags_Resizable)) {	
-		}
-		*/
-
-		// ImGui::SliderFloat("Player Movement Speed", &(PlayerControllerRef->m_PlayerVelocityX), 0.0f, 250.0f);
-		// ImGui::SliderFloat("Player Gravity", &(PlayerControllerRef->m_Gravity), 0.0f, 100.0f);
 		ImGui::End();
 	}
 

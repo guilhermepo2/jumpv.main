@@ -23,30 +23,6 @@ public:
 		if (DeltaTime > 0.0f) {
 			Velocity = DeltaMovement / DeltaTime;
 		}
-
-		/*
-		// check for grounded
-		// Check for Collision here!!
-
-		Realiti2D::CollisionInfo Info;
-
-		float MoveDown = -1.0f;
-		Realiti2D::Vector2 Min = Owner->GetComponentOfType<Realiti2D::Transform>()->Position + Owner->GetComponentOfType<Realiti2D::BoxCollider>()->GetBoundingBox()->MinPoint;
-		Min += Realiti2D::Vector2(-0.05f, -0.05f);
-		Realiti2D::Vector2 Destination = Min + Realiti2D::Vector2(0.0f, -MoveDown);
-		bool bCollided = Realiti2D::CollisionWorld::s_Instance->SegmentCast(
-			Min,
-			Destination,
-			Info
-		);
-
-		if (bCollided) {
-			DEBUG_INFO("Collided! Position: ({0}, {1}), Entity Name: {2}", Info.PointOfCollision.x, Info.PointOfCollision.y, Info.CollidedEntity->Name);
-		}
-		else {
-			Owner->GetComponentOfType<Realiti2D::Transform>()->Translate(Realiti2D::Vector2(0.0f, MoveDown));
-		}
-		*/
 	}
 
 private:
@@ -69,6 +45,7 @@ private:
 		bool bCollided = Realiti2D::CollisionWorld::s_Instance->SegmentCast(Min, Destination, Info);
 
 		if (bCollided) {
+			Velocity.y = 0.0f;
 			DeltaMovement.y = 0.0f;
 		}
 

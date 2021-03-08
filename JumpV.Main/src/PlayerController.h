@@ -9,6 +9,7 @@ public:
 
 	virtual void Initialize() {
 		DEBUG_INFO("Initializing Player Controller!");
+
 	}
 
 	void ProcessInput(const Realiti2D::InputState& InputState) {
@@ -30,11 +31,15 @@ public:
 
 	void Update(float DeltaTime) {
 		Realiti2D::Vector2 Movement(m_MovementDirection * m_PlayerVelocityX, 0.0f);
+
 		float SmoothedMovementFactor = 10.0f;
 		// Movement.x = Realiti2D::Math::Lerp(Movement.x, m_MovementDirection * m_PlayerVelocityX, SmoothedMovementFactor * DeltaTime);
 		// TODO max velocity.y with terminal velocity
-
-		Realiti2D::Vector2 VerletVelocity(Movement.x, Movement.y + (0.5f * (-m_Gravity * 10000) * DeltaTime * DeltaTime));
+		float GravityFactor = ( Movement.y < 0 ) ? 2.0f : 1.0f;
+		Realiti2D::Vector2 VerletVelocity(
+			Movement.x, 
+			Owner->GetComponentOfType<Mover>()->Velocity.y + Movement.y + (GravityFactor * 0.5f * (-m_Gravity * 10000 * DeltaTime * DeltaTime))
+		);
 		Realiti2D::Vector2 VerletDeltaMovement = VerletVelocity * DeltaTime;
 		Owner->GetComponentOfType<Mover>()->Move(VerletDeltaMovement, DeltaTime);
 
